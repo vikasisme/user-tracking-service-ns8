@@ -6,7 +6,8 @@
 
 ## Build the app and run it
  `tsc`
- `node dist\start`
+ 
+ `node ./dist/start`
 
 # API-Specification
 ## POST /user
