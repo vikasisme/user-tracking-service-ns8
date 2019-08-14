@@ -8,7 +8,7 @@ export const urlNotFound: RequestHandler = (req: Request, res: Response, next: N
 
 export const routerErrorHandler: ErrorRequestHandler = (err:Error, req: Request, res: Response, next: NextFunction): void => {
     let errorResponse: APIResponse;
-    if(err.message == ('user not found' || 'events not found')){
+    if(err.message == 'user not found' || err.message == 'events not found'){
         errorResponse = new NotFound(err.message);
     } else if (err.message.includes('Request Error')){
         errorResponse = new BadRequest({message: err.message});
