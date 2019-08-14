@@ -84,7 +84,7 @@ ___
 ___
 ## POST /user/:id/events
 **create an event for the user id**
-###Sample request 
+### Sample request 
 ```json
 {	
 	"type": "login",
@@ -228,12 +228,12 @@ ___
 ```
 ___
 
-#Technical Specification
+# Technical Specification
 1. node
 2. express
 3. typescript
 
-#Future Enhancements
+# Future Enhancements
 - Add swagger open API spec document and use the same schema for request validation and replace express-validator
 - Add unit test cases
 - Add logging 
