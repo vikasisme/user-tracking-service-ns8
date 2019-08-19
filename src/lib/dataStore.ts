@@ -15,7 +15,7 @@ export class DataStore {
      * resolves - a new user id
      * rejects - any runtime error 
      */
-    public static postUser = (email: string, password: string, phone?: string): Promise<number> => new Promise((resolve, reject) => {
+    public static postUser = (email: string, password: string, phone?: string): Promise<number> => new Promise((resolve, reject): void => {
         try{
             const user = new User(++DataStore.userId, email, password, phone);
             DataStore.users.push(user);
@@ -30,7 +30,7 @@ export class DataStore {
      * resolves - array of users
      * rejects - any runtime error
      */
-    public static getUsers = () : Promise<User[]> => new Promise((resolve, reject) => {
+    public static getUsers = () : Promise<User[]> => new Promise((resolve, reject): void => {
         try{
             resolve(DataStore.users);
         } catch(e){
@@ -44,9 +44,9 @@ export class DataStore {
      * resolves - user retrieved by id
      * rejects - user not found or any runtime error
      */
-    public static getUserById = (id: number): Promise<User> => new Promise((resolve, reject) => {
+    public static getUserById = (id: number): Promise<User> => new Promise((resolve, reject): void => {
         try{
-            const user = DataStore.users.find(user => user.id == id);
+            const user = DataStore.users.find((user): boolean => user.id == id);
             if(user){
                 resolve(user);
             } else {
@@ -62,15 +62,16 @@ export class DataStore {
      * resolves - new event id
      * rejects - user not found or any runtime error 
      */
-    public static postEvent = (userId: number, eventType: string, eventDate?: Date): Promise<number> => new Promise(async(resolve, reject) => {
-        try{
-            const user = await DataStore.getUserById(userId);
+    public static postEvent = (userId: number, eventType: string, eventDate?: Date): Promise<number> => new Promise((resolve, reject): void => {
+        DataStore.getUserById(userId)
+        .then((user): void => {
             const event = new Event(++DataStore.eventId, user.id, eventType, eventDate);
             DataStore.events.push(event);
             resolve(event.id);
-        } catch(e){
-            reject(e);
-        }
+        })
+        .catch((err): void => {
+            reject(err);
+        });
     });
 
     /**
@@ -78,7 +79,7 @@ export class DataStore {
      * resolves - array of all events of all users
      * rejects - any runtime error
      */
-    public static getEvents = (): Promise<Event[]> => new Promise((resolve, reject) => {
+    public static getEvents = (): Promise<Event[]> => new Promise((resolve, reject): void => {
         try{
             resolve(DataStore.events);
         } catch(e){
@@ -91,9 +92,9 @@ export class DataStore {
      * resolves - array of events
      * rejects - events not found or any run time error
      */
-    public static getEventsByUserId = (userId: number): Promise<Event[]> => new Promise((resolve, reject) => {
+    public static getEventsByUserId = (userId: number): Promise<Event[]> => new Promise((resolve, reject): void => {
         try{
-            const events: Event[] = DataStore.events.filter(event => event.userId == userId);
+            const events: Event[] = DataStore.events.filter((event): boolean => event.userId == userId);
             
             if(events && events.length){
                 resolve(events);
@@ -110,12 +111,12 @@ export class DataStore {
      * resolves - array of events 
      * rejects - events not found or any run time error
      */
-    public static getEventsByLastDay = () : Promise<Event[]> => new Promise((resolve, reject) => {
+    public static getEventsByLastDay = () : Promise<Event[]> => new Promise((resolve, reject): void => {
         try{
             const lastDay = new Date();
             lastDay.setDate(lastDay.getDate() - 1);
 
-            const event: Event[] = DataStore.events.filter(event => event.created > lastDay);
+            const event: Event[] = DataStore.events.filter((event): boolean => event.created > lastDay && event.created <= new Date());
 
             if(event && event.length){
                 resolve(event);
@@ -132,9 +133,9 @@ export class DataStore {
      * resolves - true if email exist
      * rejects - false if email doesn't exist
      */
-    public static emailExist = (email: string): Promise<boolean> => new Promise((resolve, reject) => {
+    public static emailExist = (email: string): Promise<boolean> => new Promise((resolve, reject): void => {
         try{
-            const emailFound: User | undefined = DataStore.users.find(user => user.email == email);
+            const emailFound: User | undefined = DataStore.users.find((user): boolean => user.email == email);
             
             if(emailFound){
                 resolve(true);
