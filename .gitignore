@@ -261,3 +261,5 @@ paket-files/
 __pycache__/
 *.pyc
 
+#javascript compiled files
+.dist
