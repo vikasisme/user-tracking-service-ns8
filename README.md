@@ -44,7 +44,7 @@
 }
 ```
 ___
-## GET /users
+## GET /user
 **returns all users**
 ### Sample response
 ```json
@@ -83,7 +83,7 @@ ___
 }
 ```
 ___
-## POST /user/:id/events
+## POST /user/:id/event
 **create an event for the user id**
 ### Sample request 
 ```json
@@ -111,7 +111,7 @@ ___
 }
 ```
 ___
-## GET /user/:id/events
+## GET /user/:id/event
 **returns events for the user id**
 ### Sample response
 ```json
@@ -135,7 +135,7 @@ ___
 }
 ```
 ___ 
-## GET /events
+## GET /event
 **returns all events of all users**
 ### Sample response
 ```json
@@ -177,7 +177,7 @@ ___
 }
 ```
 ___
-## GET /events/last-day
+## GET /event/last-day
 **returns all events of all users in the last day**
 ### Sample response
 ```json
